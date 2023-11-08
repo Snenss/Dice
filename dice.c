@@ -44,31 +44,6 @@ int main(){
     //GPIO_OUT is the macro defination for setting the direction as output
 
     while(1){
-        /*make the gpio pin 25 as high
-        gpio_put(GPIO_LED1,1);
-        gpio_put(GPIO_LED2,1);
-        gpio_put(GPIO_LED3,1);
-        gpio_put(GPIO_LED4,1);
-        gpio_put(GPIO_LED5,1);
-        gpio_put(GPIO_LED6,1);
-     
-
-        //provide some delay
-        sleep_ms(500);
-
-        //make the pin 25 low
-        gpio_put(GPIO_LED1,0);
-        gpio_put(GPIO_LED2,0);
-        gpio_put(GPIO_LED3,0);
-        gpio_put(GPIO_LED4,0);
-        gpio_put(GPIO_LED5,0);
-        gpio_put(GPIO_LED6,0);
-        gpio_put(GPIO_LED7,0);
- 
-
-
-        
-        */
         // Produce random numer between 1 and 6
         int rNumber = 1;
         uint32_t dice1;
