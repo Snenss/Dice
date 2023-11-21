@@ -32,7 +32,7 @@ int main(){
     gpio_init(GPIO_LED8);
     gpio_init(GPIO_LED9);
 
-    //set the direction as output mode
+    //set the direction as output mode zzz
     gpio_set_dir(GPIO_LED1, GPIO_OUT);
     gpio_set_dir(GPIO_LED2, GPIO_OUT);
     gpio_set_dir(GPIO_LED3, GPIO_OUT);
