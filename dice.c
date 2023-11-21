@@ -7,6 +7,7 @@
 //This automatically includes both hardware/gpio and pico/time libraries
 
 int main(){
+    const uint GPIO_BUTTON = 1;
     const uint GPIO_LED1 = 2;
     const uint GPIO_LED2 = 3;
     const uint GPIO_LED3 = 4;
@@ -14,14 +15,13 @@ int main(){
     const uint GPIO_LED5 = 6;
     const uint GPIO_LED6 = 7;
     const uint GPIO_LED7 = 8;
-    const uint GPIO_LED8 = 9;
-    const uint GPIO_LED9 = 10;
+    bool action = false;
 
-    //on board led
     
 
-    //initialise the gpio pin no 25
+    //initialise the gpio pins
     
+    gpio_init(GPIO_BUTTON);
     gpio_init(GPIO_LED1);
     gpio_init(GPIO_LED2);
     gpio_init(GPIO_LED3);
@@ -29,10 +29,9 @@ int main(){
     gpio_init(GPIO_LED5);
     gpio_init(GPIO_LED6);
     gpio_init(GPIO_LED7);
-    gpio_init(GPIO_LED8);
-    gpio_init(GPIO_LED9);
 
-    //set the direction as output mode zzz
+    //set the direction modes
+    gpio_set_dir(GPIO_BUTTON, GPIO_IN);
     gpio_set_dir(GPIO_LED1, GPIO_OUT);
     gpio_set_dir(GPIO_LED2, GPIO_OUT);
     gpio_set_dir(GPIO_LED3, GPIO_OUT);
@@ -41,9 +40,16 @@ int main(){
     gpio_set_dir(GPIO_LED6, GPIO_OUT);
     gpio_set_dir(GPIO_LED7, GPIO_OUT);
 
-    //GPIO_OUT is the macro defination for setting the direction as output
+    gpio_pull_up(GPIO_BUTTON);
 
-    while(1){
+    //GPIO_OUT is the macro defination for setting the direction as output
+   while(true){
+    if (!gpio_get(GPIO_BUTTON)){
+        action = true;
+    }
+
+
+    while(action){
         // Produce random numer between 1 and 6
         int rNumber = 1;
         uint32_t dice1;
@@ -97,9 +103,11 @@ int main(){
         gpio_put(GPIO_LED6,0);
         gpio_put(GPIO_LED7,0);
         sleep_ms(500);
+        action = false;
 
 
     }
+   }
 
     return 0;
 }
