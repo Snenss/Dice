@@ -16,6 +16,7 @@ int main(){
     const uint GPIO_LED6 = 7;
     const uint GPIO_LED7 = 8;
     bool action = false;
+    const uint LEDS[7] = {GPIO_LED1, GPIO_LED2, GPIO_LED3, GPIO_LED4, GPIO_LED5, GPIO_LED6, GPIO_LED7};
 
     
 
@@ -42,7 +43,19 @@ int main(){
 
     gpio_pull_up(GPIO_BUTTON);
 
-    //GPIO_OUT is the macro defination for setting the direction as output
+    //Simple Start Animation
+    for (int i = 0 ; i < 7 ; i++){
+        gpio_put(LEDS[i], 1);
+        sleep_ms(200);
+    }
+    for (int i = 0 ; i < 7 ; i++){
+        gpio_put(LEDS[i], 0);
+        sleep_ms(200);
+    }
+    
+
+    // Main Rotation
+    // Set davice in Dice rolling mode
    while(true){
     if (!gpio_get(GPIO_BUTTON)){
         action = true;
