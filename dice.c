@@ -1,8 +1,9 @@
 // PROGRAM TO BLINK ONBOARD LED OF PI PICO
 
 //include header files
-#include "pico/stdlib.h"
 #include <stdio.h>
+#include "pico/stdlib.h"
+#include "pico/sleep.h"
 
 //This automatically includes both hardware/gpio and pico/time libraries
 
@@ -17,6 +18,7 @@ int main(){
     const uint GPIO_LED7 = 8;
     bool action = false;
     const uint LEDS[7] = {GPIO_LED1, GPIO_LED2, GPIO_LED3, GPIO_LED4, GPIO_LED5, GPIO_LED6, GPIO_LED7};
+    int waitcount = 0;
 
     
 
@@ -55,10 +57,20 @@ int main(){
     
 
     // Main Rotation
-    // Set davice in Dice rolling mode
+    // Set device in Dice rolling mode
    while(true){
+    waitcount++;
     if (!gpio_get(GPIO_BUTTON)){
         action = true;
+        waitcount = 0;
+    }
+    // Activate Dorm mode after some tries 
+    if (waitcount > 20000000){
+        gpio_put(GPIO_LED7, 1);
+        sleep_ms(2000);
+        gpio_put(GPIO_LED7, 0);
+        sleep_run_from_xosc();
+        sleep_goto_dormant_until_pin(GPIO_BUTTON, true, false);
     }
 
 
