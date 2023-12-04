@@ -4,46 +4,14 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "pico/sleep.h"
-
-//This automatically includes both hardware/gpio and pico/time libraries
+#include "dice_hardware.h"
 
 int main(){
-    const uint GPIO_BUTTON = 1;
-    const uint GPIO_LED1 = 2;
-    const uint GPIO_LED2 = 3;
-    const uint GPIO_LED3 = 4;
-    const uint GPIO_LED4 = 5;
-    const uint GPIO_LED5 = 6;
-    const uint GPIO_LED6 = 7;
-    const uint GPIO_LED7 = 8;
+   
+    dice_hardware_init();
     bool action = false;
-    const uint LEDS[7] = {GPIO_LED1, GPIO_LED2, GPIO_LED3, GPIO_LED4, GPIO_LED5, GPIO_LED6, GPIO_LED7};
+    const uint LEDS[7] = {GPIO_LED1, GPIO_LED6, GPIO_LED2, GPIO_LED5, GPIO_LED3, GPIO_LED4, GPIO_LED7};
     int waitcount = 0;
-
-    
-
-    //initialise the gpio pins
-    
-    gpio_init(GPIO_BUTTON);
-    gpio_init(GPIO_LED1);
-    gpio_init(GPIO_LED2);
-    gpio_init(GPIO_LED3);
-    gpio_init(GPIO_LED4);
-    gpio_init(GPIO_LED5);
-    gpio_init(GPIO_LED6);
-    gpio_init(GPIO_LED7);
-
-    //set the direction modes
-    gpio_set_dir(GPIO_BUTTON, GPIO_IN);
-    gpio_set_dir(GPIO_LED1, GPIO_OUT);
-    gpio_set_dir(GPIO_LED2, GPIO_OUT);
-    gpio_set_dir(GPIO_LED3, GPIO_OUT);
-    gpio_set_dir(GPIO_LED4, GPIO_OUT);
-    gpio_set_dir(GPIO_LED5, GPIO_OUT);
-    gpio_set_dir(GPIO_LED6, GPIO_OUT);
-    gpio_set_dir(GPIO_LED7, GPIO_OUT);
-
-    gpio_pull_up(GPIO_BUTTON);
 
     //Simple Start Animation
     for (int i = 0 ; i < 7 ; i++){
@@ -81,44 +49,14 @@ int main(){
         dice1 = rand() % 6 + 1;
         rNumber = rNumber + 1;
         
-    
-
-        //roll 
-        switch (dice1) {
-            case 1:
-                gpio_put(GPIO_LED7, 1);
-                break;
-            case 2:
-                gpio_put(GPIO_LED1, 1);
-                gpio_put(GPIO_LED6, 1);
-                break;
-            case 3:
-                gpio_put(GPIO_LED1, 1);
-                gpio_put(GPIO_LED7, 1);
-                gpio_put(GPIO_LED6, 1);
-                break;
-            case 4:
-                gpio_put(GPIO_LED1, 1);
-                gpio_put(GPIO_LED2, 1);
-                gpio_put(GPIO_LED5, 1);
-                gpio_put(GPIO_LED6, 1);
-                break;
-            case 5:
-                gpio_put(GPIO_LED1, 1);
-                gpio_put(GPIO_LED2, 1);
-                gpio_put(GPIO_LED5, 1);
-                gpio_put(GPIO_LED6, 1);
-                gpio_put(GPIO_LED7, 1);
-                break;
-            case 6:
-                gpio_put(GPIO_LED1, 1);
-                gpio_put(GPIO_LED2, 1);
-                gpio_put(GPIO_LED3, 1);
-                gpio_put(GPIO_LED4, 1);
-                gpio_put(GPIO_LED5, 1);
-                gpio_put(GPIO_LED6, 1);
-                break;
-        }
+        // bei ungeraden Zahlen muss immer led7 an, bei gerade nie
+       if (dice1 % 2 != 0){
+        dice1--;
+        gpio_put(GPIO_LED7,1);
+       }
+       for (int i = 0 ; i < dice1 ; i++){
+        gpio_put(LEDS[i],1);
+       }
         sleep_ms(1000);
         gpio_put(GPIO_LED1,0);
         gpio_put(GPIO_LED2,0);
