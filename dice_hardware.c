@@ -1,4 +1,10 @@
-
+/**
+ * @file dice_hardware.c
+ *
+ * Dient der ansteuerung der Pico Würfel Hardware
+ *
+ * @author Jan Ritter / Chat Gpt
+ */
 #include "dice_hardware.h"
 #include "pico/stdlib.h"
 
