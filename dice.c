@@ -54,21 +54,19 @@ int main(){
         dice1--;
         gpio_put(GPIO_LED7,1);
        }
+       //LEDs von 0 bis dice anschalten
        for (int i = 0 ; i < dice1 ; i++){
         gpio_put(LEDS[i],1);
        }
+       //Kurz warten
         sleep_ms(1000);
-        gpio_put(GPIO_LED1,0);
-        gpio_put(GPIO_LED2,0);
-        gpio_put(GPIO_LED3,0);
-        gpio_put(GPIO_LED4,0);
-        gpio_put(GPIO_LED5,0);
-        gpio_put(GPIO_LED6,0);
-        gpio_put(GPIO_LED7,0);
-        sleep_ms(500);
+        //Alle LEDs aus
+        for (int i = 0 ; i < 7 ; i++){
+        gpio_put(LEDS[i],0);
+        sleep_ms(100);
+        }
+        
         action = false;
-
-
     }
    }
 
