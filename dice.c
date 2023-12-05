@@ -3,7 +3,6 @@
 //include header files
 #include <stdio.h>
 #include "pico/stdlib.h"
-#include "pico/sleep.h"
 #include "dice_hardware.h"
 
 int main(){
@@ -11,7 +10,6 @@ int main(){
     dice_hardware_init();
     bool action = false;
     const uint LEDS[7] = {GPIO_LED1, GPIO_LED6, GPIO_LED2, GPIO_LED5, GPIO_LED3, GPIO_LED4, GPIO_LED7};
-    int waitcount = 0;
 
     //Simple Start Animation
     for (int i = 0 ; i < 7 ; i++){
@@ -27,18 +25,10 @@ int main(){
     // Main Rotation
     // Set device in Dice rolling mode
    while(true){
-    waitcount++;
+    //waitcount++;
     if (!gpio_get(GPIO_BUTTON)){
         action = true;
-        waitcount = 0;
-    }
-    // Activate Dorm mode after some tries 
-    if (waitcount > 20000000){
-        gpio_put(GPIO_LED7, 1);
-        sleep_ms(2000);
-        gpio_put(GPIO_LED7, 0);
-        sleep_run_from_xosc();
-        sleep_goto_dormant_until_pin(GPIO_BUTTON, true, false);
+        timer_stop();
     }
 
 
@@ -67,6 +57,7 @@ int main(){
         }
         
         action = false;
+        timer_start(5000);//in ms
     }
    }
 

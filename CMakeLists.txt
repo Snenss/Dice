@@ -18,5 +18,5 @@ add_executable(dice dice.c dice_hardware.c)
 pico_add_extra_outputs(dice)
 
 #Specifies libraries - flags to use when linking a given target
-target_link_libraries(dice pico_stdlib hardware_sleep) 
+target_link_libraries(dice pico_stdlib hardware_sleep pico_time hardware_timer) 
 
