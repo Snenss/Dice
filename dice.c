@@ -1,4 +1,11 @@
-// PROGRAM TO BLINK ONBOARD LED OF PI PICO
+/**
+ * @file dice.c
+ *
+ * Implementiert ein Würfel Programm zur Ansteuerung von 7 LEDs
+ * Features: Ruhemmodus, Modularität, Animationen
+ *
+ * @author Jan Ritter
+ */
 
 //include header files
 #include <stdio.h>
@@ -19,20 +26,17 @@ int main(){
     for (int i = 0 ; i < 7 ; i++){
         gpio_put(LEDS[i], 0);
         sleep_ms(200);
+        //timer_start(1);//gehe sofort in die callback Funktion -> Ruhezustand
     }
     
 
     // Main Rotation
     // Set device in Dice rolling mode
    while(true){
-    //waitcount++;
-    if (!gpio_get(GPIO_BUTTON)){
-        action = true;
-        timer_stop();
-    }
+    
 
 
-    while(action){
+    while(getButton()){
         // Produce random numer between 1 and 6
         int rNumber = 1;
         uint32_t dice1;
@@ -40,6 +44,7 @@ int main(){
         rNumber = rNumber + 1;
         
         // bei ungeraden Zahlen muss immer led7 an, bei gerade nie
+        // Dieses If auskommentiert führt zu 6LEDs in einer Reihe
        if (dice1 % 2 != 0){
         dice1--;
         gpio_put(GPIO_LED7,1);
@@ -56,7 +61,7 @@ int main(){
         sleep_ms(100);
         }
         
-        action = false;
+        Button = false;
         timer_start(5000);//in ms
     }
    }

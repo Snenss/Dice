@@ -21,7 +21,11 @@ extern const unsigned int GPIO_LED5;
 extern const unsigned int GPIO_LED6;
 extern const unsigned int GPIO_LED7;
 
+// Globale Variable für den Button status
+extern bool Button;
 
+
+bool getButton();
  
 /**
  * Intialisiert hier alles

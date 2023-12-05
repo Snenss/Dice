@@ -24,10 +24,22 @@ const unsigned int GPIO_LED7 = 8;
 //globale timer variablen
 struct repeating_timer timer;
 uint32_t time_ms;
+//globale Button Variable
+bool Button;
 
 
+void button_callback(uint gpio, uint32_t events){
+    timer_stop();
+    Button = true;
+}
+
+volatile bool getButton(){
+    return Button;
+}
 
 void dice_hardware_init(){
+    // Set Button variable false
+    Button = false;
     // Init GPIO s
     gpio_init(GPIO_BUTTON);
     gpio_init(GPIO_LED1);
@@ -47,8 +59,8 @@ void dice_hardware_init(){
     gpio_set_dir(GPIO_LED5, GPIO_OUT);
     gpio_set_dir(GPIO_LED6, GPIO_OUT);
     gpio_set_dir(GPIO_LED7, GPIO_OUT);
-
     gpio_pull_up(GPIO_BUTTON);
+    gpio_set_irq_enabled_with_callback(GPIO_BUTTON, 0x04, 1, button_callback);
 
 }
 /**
