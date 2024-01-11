@@ -28,20 +28,21 @@ extern bool Button;
 bool getButton();
  
 /**
- * Intialisiert hier alles
+ * Intialisiert den Eingang und alle Ausgaenge.
+ * Initialisiert den Callback für den Eingang
  * 
 */
 void dice_hardware_init();
 
 /**
- * Startet den Timer
+ * Startet den Timer, der festlegt, wann in den Dormant Mode gewechselt wird.
  * 
- * @param minutes = time to time in Minutes
+ * @param minutes: Zeit in Minuten,bis timer ausloest
 */
 void timer_start(uint32_t minutes);
 
 /**
- * häl den Timer an
+ * hält den Timer an
  * 
 */
 void timer_stop();

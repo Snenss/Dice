@@ -30,14 +30,12 @@ int main(){
     }
     
 
-    // Main Rotation
-    // Set device in Dice rolling mode
+    // Hier laeueft das Programm in Dauerschleife
    while(true){
     
 
-
     while(getButton()){
-        // Produce random numer between 1 and 6
+        // Produziere Pseudozufallszahl
         int rNumber = 1;
         uint32_t dice1;
         dice1 = rand() % 6 + 1;
@@ -62,6 +60,7 @@ int main(){
         }
         
         Button = false;
+        //Timer nachdem der Dormant Mode automatisch startet
         timer_start(5000);//in ms
     }
    }
