@@ -1,7 +1,7 @@
 /**
  * @file dice_hardware.c
  *
- * Dient der ansteuerung der Pico Würfel Hardware
+ * Dient der Ansteuerung der Pico Würfel Hardware
  *
  * @author Jan Ritter
  */
@@ -10,6 +10,7 @@
 #include "pico/time.h"
 #include "hardware/timer.h"
 #include "pico/sleep.h"
+#include "dice_animation.h"
 
 // GPIO Konstanten
 const unsigned int GPIO_BUTTON = 1;
@@ -20,18 +21,19 @@ const unsigned int GPIO_LED4 = 5;
 const unsigned int GPIO_LED5 = 6;
 const unsigned int GPIO_LED6 = 7;
 const unsigned int GPIO_LED7 = 8;
+unsigned int LEDS[7] = {GPIO_LED1, GPIO_LED6, GPIO_LED2, GPIO_LED5, GPIO_LED3, GPIO_LED4, GPIO_LED7};
 
 //globale timer variablen
 struct repeating_timer timer;
 uint32_t time_ms;
 //globale Button Variable
 bool Button;
-// globale Dormant Variable
+//globale Dormant Variable
 bool dormantActive = true;
 
 
 void button_callback(uint gpio, uint32_t events){
-    const uint LEDS[7] = {GPIO_LED1, GPIO_LED6, GPIO_LED2, GPIO_LED5, GPIO_LED3, GPIO_LED4, GPIO_LED7};
+    //const uint LEDS[7] = {GPIO_LED1, GPIO_LED6, GPIO_LED2, GPIO_LED5, GPIO_LED3, GPIO_LED4, GPIO_LED7};
     static absolute_time_t button_press_time;
     button_press_time = get_absolute_time();
 
@@ -43,14 +45,14 @@ void button_callback(uint gpio, uint32_t events){
 
     uint32_t press_duration = absolute_time_diff_us(button_press_time, button_release_time);
     if(press_duration > 1 * 1000000){
-        //bei langem tastendruck irgendwas machen
+        //bei langem Tastendruck dormant Umschalten
         dormantActive = !dormantActive;
-        for (int i = 1 ; i < 7 ; i++){
-        gpio_put(LEDS[i], 1);
-        }
-        busy_wait_ms(1000);
-        for (int i = 1 ; i < 7 ; i++){
-        gpio_put(LEDS[i], 0);
+        // bei Aktivierung
+        if (dormantActive){
+            animations_blink(ANIMATION_FAST, 3);
+        // bei Deaktivierung
+        }else{
+            animations_blink(ANIMATION_FAST, 6);
         }
 
     }else if (press_duration > 1 * 10000){//entprellen
@@ -63,7 +65,7 @@ volatile bool getButton(){
     return Button;
 }
 
-void dice_hardware_init(){
+int dice_hardware_init(){
     // Set Button variable false
     Button = false;
     // Init GPIO s
@@ -88,7 +90,6 @@ void dice_hardware_init(){
     gpio_set_dir(GPIO_LED7, GPIO_OUT);
     
     gpio_pull_up(GPIO_BUTTON);
-    //gpio_set_irq_enabled_with_callback(GPIO_BUTTON, 0x04, 1, button_callback);
     /*Legt den GPIO fest, der einen Interrupt ausloesen soll. Der aktuelle Prozessor wird interrupted
     param2 legt die Ausloesebedingung fest
     1 aktiviert den hier gerade konfigurierten Interrupt
@@ -99,9 +100,10 @@ void dice_hardware_init(){
     //eine der IRQ baenke wird aktiviert //////////////hier ruhemodus
     if (1) irq_set_enabled(IO_IRQ_BANK0, true);
 
+    return 0;
 }
 /**
- * Wird nach ablaufen des Timers aufgerufen.
+ * Wird nach dem Ablaufen des Timers aufgerufen.
  * Signalisiert Eintritt in den dormant modes durch blinkende LED
  * 
  * @param : timer Globale timer variable
@@ -126,7 +128,7 @@ bool timer_callback(struct repeating_timer *timer) {
 /**
  * Startet den Timer, der festlegt, wann in den Dormant Mode gewechselt wird.
  * 
- * @param minutes: Zeit in Minuten,bis timer ausloest
+ * @param minutes: Zeit in Minuten, bis Timer ausloest
 */
 void timer_start(uint32_t minutes) {
     //time_ms = minutes * 60 * 1000;

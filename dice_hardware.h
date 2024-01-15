@@ -21,8 +21,13 @@ extern const unsigned int GPIO_LED5;
 extern const unsigned int GPIO_LED6;
 extern const unsigned int GPIO_LED7;
 
+//Oeffentliches Array aller LEDs
+extern unsigned int LEDS[7];
+
 // Globale Variable für den Button status
 extern bool Button;
+
+
 
 
 bool getButton();
@@ -32,7 +37,7 @@ bool getButton();
  * Initialisiert den Callback für den Eingang
  * 
 */
-void dice_hardware_init();
+int dice_hardware_init();
 
 /**
  * Startet den Timer, der festlegt, wann in den Dormant Mode gewechselt wird.
