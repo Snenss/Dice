@@ -11,7 +11,7 @@ project(JanProg_project)
 pico_sdk_init()
 
 #This creates an executable target "dice" from source files
-add_executable(dice dice.c dice_hardware.c)
+add_executable(dice dice.c dice_hardware.c dice_animation.c)
 
 
 #Generates different file formats such as .uf2 .elf .bin

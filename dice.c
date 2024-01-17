@@ -12,11 +12,14 @@
 #include "pico/stdlib.h"
 #include "dice_hardware.h"
 #include "dice_animation.h"
+#include "hardware/uart.h"
+
+
 
 int main(){
+
     int error = 0;
     error = dice_hardware_init();
-    bool action = false;
 
     //Start Animation
     animations_start(ANIMATION_VERY_FAST);
@@ -27,6 +30,7 @@ int main(){
     
 
     while(getButton()){
+
         // Produziere Pseudozufallszahl
         //int rNumber = 1;
         uint32_t dice1;
