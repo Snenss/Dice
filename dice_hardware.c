@@ -33,7 +33,6 @@ bool dormantActive = true;
 
 
 void button_callback(uint gpio, uint32_t events){
-    //const uint LEDS[7] = {GPIO_LED1, GPIO_LED6, GPIO_LED2, GPIO_LED5, GPIO_LED3, GPIO_LED4, GPIO_LED7};
     static absolute_time_t button_press_time;
     button_press_time = get_absolute_time();
 
