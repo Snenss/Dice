@@ -13,7 +13,7 @@
 #include "dice_animation.h"
 
 // GPIO Konstanten
-const unsigned int GPIO_BUTTON = 1;
+const unsigned int GPIO_BUTTON = 9;
 const unsigned int GPIO_LED1 = 2;
 const unsigned int GPIO_LED2 = 3;
 const unsigned int GPIO_LED3 = 4;

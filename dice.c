@@ -32,10 +32,8 @@ int main(){
     while(getButton()){
 
         // Produziere Pseudozufallszahl
-        //int rNumber = 1;
         uint32_t dice1;
         dice1 = rand() % 6 + 1;
-        //rNumber = rNumber + 1;
         
         // bei ungeraden Zahlen muss immer led7 an, bei gerade nie
         // Dieses If auskommentiert führt zu 6LEDs in einer Reihe
