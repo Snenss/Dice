@@ -40,7 +40,6 @@ int main(){
         dice1 = rand() % 6 + 1;
         
         // bei ungeraden Zahlen muss immer led7 an, bei gerade nie
-        // Dieses If auskommentiert führt zu 6LEDs in einer Reihe
        if (dice1 % 2 != 0){
         dice1--;
         gpio_put(GPIO_LED7,1);
