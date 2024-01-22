@@ -8,6 +8,7 @@
 
 // Enum für Animationsgeschwindigkeiten
 typedef enum {
+    ANIMATION_NO_DELAY = 0,
     ANIMATION_VERY_FAST = 100,
     ANIMATION_FAST = 500,
     ANIMATION_MIDDLE = 1000,

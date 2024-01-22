@@ -1,7 +1,7 @@
 /**
  * @file dice_animation.h
  *
- * Beschreibt anmationen und deren Hilfsfunktionen
+ * Beschreibt Anmationen und deren Hilfsfunktionen
  *
  * @author Jan Ritter
  */

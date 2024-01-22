@@ -12,7 +12,6 @@
 #include "pico/stdlib.h"
 #include "dice_hardware.h"
 #include "dice_animation.h"
-#include "hardware/uart.h"
 
 
 
@@ -23,6 +22,8 @@ int main(){
 
     //Start Animation
     animations_start(ANIMATION_VERY_FAST);
+    //Timer für Dormant mode Aktivierung
+    timer_start(10000);
     
 
     // Hier laeueft das Programm in Dauerschleife
@@ -30,6 +31,9 @@ int main(){
     
 
     while(getButton()){
+
+        //Alle LEDs aus
+        animations_put_off(ANIMATION_VERY_FAST);
 
         // Produziere Pseudozufallszahl
         uint32_t dice1;
@@ -45,10 +49,6 @@ int main(){
        for (int i = 0 ; i < dice1 ; i++){
         gpio_put(LEDS[i],1);
        }
-       //Kurz warten
-        sleep_ms(1000);
-        //Alle LEDs aus
-        animations_put_off(ANIMATION_VERY_FAST);
         Button = false;
         //Timer nachdem der Dormant Mode automatisch startet
         timer_start(5000);//in ms

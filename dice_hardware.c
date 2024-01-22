@@ -12,6 +12,18 @@
 #include "pico/sleep.h"
 #include "dice_animation.h"
 
+typedef enum {
+    PRESS_ONE_SECOND = 1 * 1000000,
+    PRESS_TWO_SECONDS = 2 * 1000000,
+    PRESS_THREE_SECONDS = 3 * 1000000
+} LongPressDuration;
+
+typedef enum {
+    DEBOUNCE_LONG = 10000,
+    DEBOUNCE_MIDDLE = 5000,
+    DEBOUNCE_SHORT = 2500
+} debounce;
+
 // GPIO Konstanten
 const unsigned int GPIO_BUTTON = 9;
 const unsigned int GPIO_LED1 = 2;
@@ -27,7 +39,7 @@ unsigned int LEDS[7] = {GPIO_LED1, GPIO_LED6, GPIO_LED2, GPIO_LED5, GPIO_LED3, G
 struct repeating_timer timer;
 uint32_t time_ms;
 //globale Button Variable
-bool Button;
+bool Button = false;
 //globale Dormant Variable
 bool dormantActive = true;
 
@@ -43,7 +55,7 @@ void button_callback(uint gpio, uint32_t events){
     button_release_time = get_absolute_time();
 
     uint32_t press_duration = absolute_time_diff_us(button_press_time, button_release_time);
-    if(press_duration > 1 * 1000000){
+    if(press_duration > PRESS_TWO_SECONDS){
         //bei langem Tastendruck dormant Umschalten
         dormantActive = !dormantActive;
         // bei Aktivierung
@@ -54,7 +66,7 @@ void button_callback(uint gpio, uint32_t events){
             animations_blink(ANIMATION_FAST, 6);
         }
 
-    }else if (press_duration > 1 * 10000){//entprellen
+    }else if (press_duration > DEBOUNCE_MIDDLE){//entprellen
         Button = true;
     }
     timer_stop();
@@ -108,14 +120,9 @@ int dice_hardware_init(){
  * @param : timer Globale timer variable
 */
 bool timer_callback(struct repeating_timer *timer) {
+    
     //Animation
-    gpio_put(GPIO_LED7, 1);
-    busy_wait_ms(200);
-    gpio_put(GPIO_LED7, 0);
-    busy_wait_ms(200);
-    gpio_put(GPIO_LED7, 1);
-    busy_wait_ms(200);
-    gpio_put(GPIO_LED7, 0);
+    animations_blink(ANIMATION_VERY_SLOW, 2);
     timer_stop();
     //wechsel auf Basic clock Generator
     sleep_run_from_xosc();

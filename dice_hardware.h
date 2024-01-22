@@ -1,7 +1,7 @@
 /**
  * @file dice_hardware.h
  *
- * Dient der ansteuerung der Pico Würfel Hardware
+ * Dient der Ansteuerung der Pico Würfel Hardware
  *
  * @author Jan Ritter / Chat Gpt
  */
@@ -26,9 +26,6 @@ extern unsigned int LEDS[7];
 
 // Globale Variable für den Button status
 extern bool Button;
-
-
-
 
 bool getButton();
  
