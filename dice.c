@@ -3,6 +3,7 @@
  *
  * Implementiert ein Würfel Programm zur Ansteuerung von 7 LEDs
  * Features: abschaltbarer Ruhemmodus, Modularität, Animationen
+ * Version fuer 6LEDs in einer Reihe
  *
  * @author Jan Ritter
  */
@@ -39,11 +40,6 @@ int main(){
         uint32_t dice1;
         dice1 = rand() % 6 + 1;
         
-        // bei ungeraden Zahlen muss immer led7 an, bei gerade nie
-       if (dice1 % 2 != 0){
-        dice1--;
-        gpio_put(GPIO_LED7,1);
-       }
        //LEDs von 0 bis dice anschalten
        for (int i = 0 ; i < dice1 ; i++){
         gpio_put(LEDS[i],1);
