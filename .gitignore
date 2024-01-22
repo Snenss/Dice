@@ -10,7 +10,6 @@ build/dice.dis
 build/dice.elf
 build/dice.elf.map
 build/dice.hex
-build/dice.uf2
 build/.cmake/api/v1/query/client-vscode/query.json
 build/.cmake/api/v1/reply/cache-v2-4046daae94a12a106728.json
 build/.cmake/api/v1/reply/cmakeFiles-v1-64fe9b7d02507648b8d4.json
@@ -313,3 +312,12 @@ build/.cmake/api/v1/reply/index-2023-12-04T22-56-47-0930.json
 build/.cmake/api/v1/reply/target-dice-Debug-cf3620b5043688eefc6f.json
 build/CMakeFiles/dice.dir/dice_hardware.c.obj
 .vscode/settings.json
+build/.cmake/api/v1/reply/cache-v2-25fe09aee726003ce105.json
+build/.cmake/api/v1/reply/index-2023-12-05T15-57-52-0683.json
+build/.cmake/api/v1/reply/cache-v2-79f3baeb20cb599b2449.json
+build/.cmake/api/v1/reply/index-2023-12-05T18-09-10-0590.json
+build/.cmake/api/v1/reply/cache-v2-85784392cfd7f61a7059.json
+build/.cmake/api/v1/reply/codemodel-v2-839acf62319243ed3e5b.json
+build/.cmake/api/v1/reply/index-2024-01-22T16-38-30-0332.json
+build/.cmake/api/v1/reply/target-dice-Debug-0da134c23f57260324fd.json
+build/CMakeFiles/dice.dir/dice_animation.c.obj
